@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<script type="text/javascript" src="/api/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="/api/zion/zion-all.js"></script>
+<Script type="text/javascript" src="/api/map/maps-all.js"></Script>
+</head>
+<body>
+<div align="center" style="margin-top:10px;"><h2>任务单</h2></div>
+
+<table width="1000" border="1" align="center" bordercolor="#000000" cellpadding="5" cellspacing="0">
+  <tr>
+    <td width="15%"><b>缺陷编号</b></td>
+    <td width="20%"><span id="defect_id"></span></td>
+	<td width="10%"><b>发送人员</b></td>
+    <td width="20%"><span id="login_name"></span></td>
+	<td width="15%"><b>缺陷类型</b></td>
+    <td width="25%"><span id="name"></span></td>
+  </tr>
+  <tr>
+	<td><b>上报时间</b></td>
+	<td colspan="5"><span id="recv_time"></span></td>
+  </tr>
+	<td><b>经度</b></td>
+    <td colspan="2"><span id="longitude"></span></td>
+	<td><b>纬度</b></td>
+    <td colspan="2"><span id="latitude"></span></td>
+  </tr>
+  <tr>
+    <td><b>处理状态</b></td>
+    <td><span id='status'></span></td>
+	 <td><b>缺陷说明</b></td>
+    <td colspan="3"><span id='memo'></span></td>
+  </tr>
+
+  <tr>
+    <td><b>任务目标</b></td>
+    <td><span id='target'></span></td>
+	<td><b>开始时间</b></td>
+    <td><span id='start_time'></span></td>
+	<td><b>结束时间</b></td>
+    <td><span id='end_time'></span></td>
+  </tr>
+  <tr>
+	<td height="60"><b>任务备注</b></td>
+    <td colspan="5"><span id='task_memo'></span></td>
+  </tr>
+  <tr>
+	<td><b>地图</b></td>
+    <td colspan="5"><div id='map_canvas_print' style='width:650px;height:550px;' ></div></td>
+	
+  </tr>
+  <tr>
+	<td><b>图片</b></td>
+    <td colspan="5"><img id="print_img"/></td>
+	
+  </tr>
+  
+</table>
+<table align="center" width="800" border="0">
+  <tr>
+	<td width="15%" align="right">打印人：</td>
+    <td width="35%"><span id='username'></span></td>
+	<td width="15%" align="right">打印时间：</td>
+    <td width="35%"><span id='sysdate_time'></span></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+	sm = top.sm;
+	var defect_id = sm.data.id;
+	var recv_time = sm.data.recv_time;
+	var login_name = sm.data.login_name;
+	var longitude = sm.data.longitude;
+	var latitude = sm.data.latitude;
+	var name = sm.data.name;
+	var status = sm.data.status;
+	var memo = sm.data.memo;
+	var dictionary_id = sm.data.dictionary_id;
+	var target = top.target;
+	var start_time = top.start_time;
+	var end_time = top.end_time;
+	var task_memo = top.task_memo;
+	
+	var status_value;
+	if(status == 1){ 
+		status_value = "未处理";
+	}else if(status == 2){
+		status_value = "处理中";
+	}else{
+		status_value = "已处理";
+	}
+	var user_name = top.user;
+	var pdt_id = sm.data.pdt_id;
+	$("#print_img").attr("src","/uploaded/visitator/defect/"+defect_id+".jpg")
+	$("#defect_id").text(defect_id);
+	$("#recv_time").text(new Date(recv_time * 1000).toLocaleString());
+	$("#login_name").text(login_name);
+	$("#longitude").text(longitude);
+	$("#latitude").text(latitude);
+	$("#name").text(name);
+	$("#status").text(status_value);
+	$("#memo").text(memo);
+	$("#target").text(target);
+	$("#start_time").text(start_time);
+	$("#end_time").text(end_time);
+	$("#task_memo").text(task_memo);
+	$("#username").text(user_name);
+	$("#sysdate_time").text(new Date().toLocaleString());
+	var map = new GMap2(document.getElementById("map_canvas_print"), M_DEFAULT_MAP_OPTIONS);
+	map.setCenter(new GLatLng(34.63320791137959, 107.7099609375), 4);
+	map.clearOverlays();
+	var targetIcon = new GIcon();
+	targetIcon.iconSize = new GSize(26, 26);
+	targetIcon.iconAnchor = new GPoint(13, 13);
+	targetIcon.image = "/api/image/defect/"+dictionary_id+".png";
+	var markerOptions = {
+		icon : targetIcon,
+		clickable : false
+	}
+	var point = new GLatLng(latitude,longitude);
+	marker = new GMarker(point, markerOptions);
+	map.setCenter(point , 16);
+	map.addOverlay(marker);
+	
+</script>
+</body>
+</html>

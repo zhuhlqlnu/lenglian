@@ -1,0 +1,438 @@
+	Ext.onReady(function(){
+		Ext.QuickTips.init();
+		var id = [];  //编号
+		var formPanel;
+		var supplier_combo;
+		var supplier_name_data = {};
+		var imsi_add = false;
+		// 货品档案
+		var selectCorpId ;
+		var store_sql = "axiom_imsi.select"; 
+		var fields = [ 'imsi_id', 'address', 'corp_id','terminal_id','enable', 'memo' ]; 
+		var loadMask = new Ext.LoadMask(Ext.getBody(), {
+			msg : "加载中，请稍后 ..."
+		});
+		loadMask.show();
+		var store = new Ext.zion.db.ArrayStore({
+			db:{alias: store_sql,
+			params : [selectCorpId]},
+			root:"r",
+			fields: fields 
+		});
+		var sm = new Ext.grid.CheckboxSelectionModel();
+		var grid = new Ext.grid.GridPanel({  
+	         store: store, 
+	         sm:sm, 
+	         columns: [  
+			     sm, 
+			     {header: "序号", dataIndex: 'imsi_id', width:50, sortable: true},  
+	             {header: "通讯地址", dataIndex: 'address', width:50, sortable: true},  
+//	             {header: "所属集团编号", dataIndex: 'corp_id', width:50, sortable: true},  
+	             {header: "是否生效", dataIndex: 'enable', width:50, sortable: true,renderer:function(str){
+	             	var re_str = '';
+	             	if(1==str){
+	             		re_str = '生效';
+	             	}else{
+	             		re_str = '不生效';
+	             	}
+	             	return re_str;
+	             
+	             }},
+	             {header: "备注", dataIndex: 'memo', width:50, sortable: true}
+	         ],  
+	         tbar:[{
+						text: '新增',
+						icon:Ext.zion.image_base+'/add.gif',
+						tooltip:'添加新纪录',					
+						handler:function(){
+	        	 			imsi_add = true;
+	        	 			win_show();
+	        	 		},
+	                    scope:this
+					},'-',
+					{
+						id : 'editButton',
+						disabled : true,
+						text:'修改',
+						icon:Ext.zion.image_base+'/update.gif',
+						tooltip:'修改记录',
+						handler:function(){
+							update_goods();
+						},				
+	                    scope:this
+					},'-',
+					{
+						id : 'deleteButton',
+						disabled : true,
+						text:'删除',
+						icon:Ext.zion.image_base+'/delete.gif',
+						tooltip:'删除记录',
+						 handler: delete_imsi,
+						scope:this
+					},'-',
+					{
+						text:'刷新',
+						icon:Ext.zion.image_base+'/refresh.gif',
+						tooltip:'刷新纪录',          
+	                   	handler: function(){
+	                   		grid.store.reload();
+	                   		disableButton();
+	                   	},
+	                   	scope:this
+					}
+				],
+			bbar:new Ext.PagingToolbar({
+				store: store,
+				pageSize: Ext.zion.page.limit,
+				displayInfo : true 
+			}),
+			viewConfig : {
+				autoFill : true,
+				forceFit : true
+			} 
+ 		}); 
+		//store.load({params:{start:0,limit:Ext.zion.page.limit}});	
+		
+//==============grid 选中事件==================		
+	sm.on('rowselect', function() {
+		if (grid.selModel.getSelections().length == 1) {
+			Ext.getCmp('editButton').enable();
+		} else {
+			Ext.getCmp('editButton').disable();
+		}
+		if (grid.selModel.getSelections().length != 0) {
+			Ext.getCmp('deleteButton').enable();
+		} else {
+			Ext.getCmp('deleteButton').disable();
+		}
+	})
+	sm.on('rowdeselect', function() {
+		if (grid.selModel.getSelections().length == 1) {
+			Ext.getCmp('editButton').enable();
+		} else {
+			Ext.getCmp('editButton').disable();
+		}
+		if (grid.selModel.getSelections().length !=0) {
+			Ext.getCmp('deleteButton').enable();
+		} else {
+			Ext.getCmp('deleteButton').disable();
+		}
+	})
+		
+	
+		
+		// 双击列事件
+		grid.addListener('rowdblclick',updateGridRowClick);
+		function updateGridRowClick(grid, rowIndex, e ){
+			update_goods();
+			
+		}
+	
+		// ///////////////////////////////////////////////////////////////////////////////////
+		// ----------gird-form表单---------
+		// ///////////////////////////////////////////////////////////////////////////////////
+		// 单位类型
+		function win_show(){
+			formPanel=new Ext.form.FormPanel({
+		        defaultType: 'textfield',
+		        items: [{
+	                fieldLabel: '通讯地址',
+	                name: 'address',
+					allowBlank: false,
+					blankText:'不能为空'
+	            },{
+					xtype : "radiogroup",
+					fieldLabel : '是否生效',
+					isFormField : true,
+					items : [{
+							columnWidth : .5,
+							checked : true,
+							xtype : "radio",
+							boxLabel : "生效",
+							name : "enable",
+							inputValue : 1
+						}, {
+							columnWidth : .5,
+							xtype : "radio",
+							boxLabel : "不生效",
+							name : "enable",
+							inputValue : 0
+						}]
+				},{
+	                fieldLabel: '备注',
+	                xtype:'textarea',
+	                name: 'memo'
+	            },{
+	                fieldLabel: '通讯卡编号',
+	                name: 'imsi_id',
+	                hideLabel:true,
+	                hidden:true
+	            },{
+	                fieldLabel: '所属集团编号',
+	                name: 'corp_id',
+	                value : selectCorpId,
+	                hideLabel:true,
+	                hidden : true
+	            }]						 
+			})
+			// ----window表单----
+			
+			var win = new Ext.Window({
+				title: '通讯卡管理',
+				closable:true,
+				items:[formPanel],
+		        buttons: [{
+		            text: '保存',
+					handler:function(){
+		        		if(imsi_add==true){
+		        			add_imsi(formPanel.getForm(),win);
+		        		}else{
+		        			update_imsi(formPanel.getForm(),win);
+		        		}
+		        	}
+		        },{
+		            text: '取消',
+					handler:function(){win.close();}
+		        }]
+			});
+			win.show();
+		}
+	
+		// ----------gird操作---------
+		function add_imsi(formPanel,win){
+			if(formPanel.isValid() == false){
+				return false;
+			}
+			// 增加操作
+			var params = Ext.zion.form.getParams(formPanel,['address', 'corp_id', 'enable', 'memo']);
+			Ext.zion.db.getJSON("axiom_imsi.insert", params, function(data){
+				if ( data.r && data.r!=0 ){
+					Ext.Msg.alert("提示","添加成功");
+					win.close();
+				 	grid.store.reload();	
+				} else {
+					Ext.Msg.alert("提示","数据添加错误");
+				}
+			});	
+		}
+		//修改操作
+		function update_imsi(formPanel,win){
+			if(formPanel.isValid() == false){
+				return false;
+			}
+			var params = Ext.zion.form.getParams(formPanel,['address','enable' ,'memo','imsi_id']);
+			Ext.zion.db.getJSON("axiom_imsi.update", params, function(data){
+				if (data.r==1) {
+					Ext.Msg.alert("提示","修改成功");
+					win.close();
+				 	grid.store.reload();
+				 	disableButton();
+				} else {
+					Ext.Msg.alert("提示","数据修改错误");
+				}
+			});
+		}
+		// ----------修改window表单---------
+		function update_goods(){
+			imsi_add = false;
+			var sm = grid.getSelectionModel().getSelected();
+			win_show();
+			formPanel.form.loadRecord(sm);
+		}
+
+		// 删除 form
+		function delete_imsi(){
+			grid.getStore().reload();
+			var sm = grid.getSelectionModel().getSelections();
+			if(sm.length == 0){
+				Ext.Msg.alert("删除操作", "请选择要删除的项");  
+			}else{
+				if(sm.length>0){
+					Ext.Msg.confirm('删除确认','你是否确认删除选中的记录？',function(btn){
+						if (btn == 'yes') {
+						 	for(var i=0;i<sm.length;i+=1){  
+				                 var member = sm[i].data; 
+				                 if(member) {  
+				                 	 if( null!=member.terminal_id){
+				                 	 	Ext.Msg.alert("警告","通讯卡被使用！不能被删除");
+				                 	 	disableButton();
+				                 	 	return ;
+				                 	 }
+				                     id.push(member.imsi_id);
+				                 }else{  
+				                     store.remove(store.getAt(i));  
+				                 }  
+				             }  
+							if(id.length>0){
+								deleNext();
+							}
+						}else{
+							disableButton();
+						}
+					})
+				}
+			}
+		}
+		var deleNext = function(){
+			if(id.length > 0){
+				Ext.zion.db.getJSON("axiom_imsi.delete", [id.pop()], function(data){
+					if(data.r != 0 ){
+						Ext.Msg.alert("提示","删除成功");			
+					}else{
+						Ext.Msg.alert("提示","删除失败");
+					}
+					deleNext();
+				});
+			}else{
+				grid.store.reload();
+				disableButton();
+			}
+		}
+
+		// ==============tree=================
+		function appendCorpNode(corp_list, node, index) {
+			var nodeAdd = {};
+			nodeAdd.text = corp_list[index][2];
+			nodeAdd.expanded = true;
+			nodeAdd.corp = {
+				corp_id : corp_list[index][0],
+				selectCorpId : corp_list[index][1],
+				order_by : corp_list[index][3],
+				group_id : corp_list[index][4]
+			};
+
+			node.children.push(nodeAdd);
+			if (corp_list[index].children) {
+				nodeAdd.children = [];
+				for ( var i = 0; i < corp_list[index].children.length; i++) {
+					appendCorpNode(corp_list, nodeAdd,
+							corp_list[index].children[i]);
+				}
+			} else {
+				nodeAdd.leaf = true;
+			}
+		}
+
+		function createCorpTree(corp_list) {
+			var tree = {
+				children : []
+			};
+
+			for ( var i = 0; i < corp_list.length; i++) {
+				for ( var j = 0; j < corp_list.length; j++) {
+					if (corp_list[j][0] == corp_list[i][1]) {
+						if (!corp_list[j].children) {
+							corp_list[j].children = [];
+						}
+						corp_list[j].children.push(i);
+						corp_list[i].child = true;
+					}
+				}
+			}
+
+			for ( var i = 0; i < corp_list.length; i++) {
+				if (!corp_list[i].child) {
+					appendCorpNode(corp_list, tree, i);
+				}
+			}
+
+			return tree;
+		}
+
+		function loadCorpTree(callback, scope) {
+			Zion.db.getJSON('tree.user_corp', null, function(data) {
+				if ((data) && (data.r)) {
+					if (callback) {
+						callback.call(scope || window, createCorpTree(data.r));
+					}
+
+				}
+			});
+		}
+
+		// ==============tree=================
+		// =========显示树和grid列表================
+
+		var corp_tree = new Ext.tree.TreePanel( {
+			title : '集团列表',
+			id : 'tree_id',
+			autoScroll : true,
+			collapsible : true,
+			split : true,
+			region : 'west',
+			width : 200,
+			loader : new Ext.tree.TreeLoader(),
+			root : new Ext.tree.AsyncTreeNode(null),
+			rootVisible : false,
+			listeners : {
+				click : function(node) {
+					disableButton();
+					selectCorpId = node.attributes.corp.corp_id;
+					store.constructor( {
+						db : {
+							alias : store_sql,
+							params : [ selectCorpId ]
+						},
+						root : "r",
+						fields : fields
+					});
+					store.load( {
+						params : {
+							start : 0,
+							limit : Ext.zion.page.limit
+						}
+					});
+
+				}
+			}
+		});
+
+	function disableButton(){
+		Ext.getCmp('editButton').disable();
+		Ext.getCmp('deleteButton').disable();
+	}
+
+
+		// grid自适应
+		new Ext.Viewport({  
+			layout:'border',  
+			border:false,  
+			items:[ corp_tree,{  
+				region:'center',  
+				layout:'fit',  
+				items:[grid]  
+			}]  
+		});	 
+
+		/*
+		loadCorpTree(function(corpTree) {
+			corp_tree.setRootNode(new Ext.tree.AsyncTreeNode(corpTree));
+			corp_tree.getRootNode().childNodes[0].select();
+			loadMask.hide();
+		});
+		*/
+		Zion.user.getInfo(function() {
+			selectCorpId = Zion.user.corp_id;
+			loadCorpTree(function(tree) {
+				corp_tree.setRootNode(new Ext.tree.AsyncTreeNode(tree));
+				corp_tree.getRootNode().childNodes[0].select();
+				loadMask.hide();
+			});
+
+			store.constructor( {
+						db : {
+							alias : store_sql,
+							params : [ Zion.user.corp_id ]
+						},
+						root : "r",
+						fields : fields
+					});
+			store.load( {
+				params : {
+					start : 0,
+					limit : Ext.zion.page.limit
+				}
+			});
+		});
+		
+	})

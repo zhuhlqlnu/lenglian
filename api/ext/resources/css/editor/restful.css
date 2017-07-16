@@ -1,0 +1,72 @@
+STRONG {
+	FONT-WEIGHT: bold
+}
+.x-grid3 .x-window-ml {
+	PADDING-LEFT: 0px
+}
+.x-grid3 .x-window-mr {
+	PADDING-RIGHT: 0px
+}
+.x-grid3 .x-window-tl {
+	PADDING-LEFT: 0px
+}
+.x-grid3 .x-window-tr {
+	PADDING-RIGHT: 0px
+}
+.x-grid3 .x-window-tc .x-window-header {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; HEIGHT: 3px; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+.x-grid3 .x-window-mc {
+	BORDER-RIGHT-WIDTH: 0px; BACKGROUND: #cdd9e8; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px
+}
+.x-grid3 .x-window-bl {
+	PADDING-LEFT: 0px
+}
+.x-grid3 .x-window-br {
+	PADDING-RIGHT: 0px
+}
+.x-grid3 .x-panel-btns {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.x-grid3 .x-panel-btns TD.x-toolbar-cell {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; PADDING-TOP: 3px
+}
+.x-box-inner {
+	ZOOM: 1
+}
+.ext-ie .x-row-editor .x-form-text {
+	MARGIN: 0px
+}
+.x-row-editor-header {
+	BACKGROUND: url(images/row-editor-bg.gif) repeat-x 0px 0px; HEIGHT: 2px; OVERFLOW: hidden
+}
+.x-row-editor-footer {
+	BACKGROUND: url(images/row-editor-bg.gif) repeat-x 0px -2px; HEIGHT: 2px; OVERFLOW: hidden
+}
+.ext-ie .x-row-editor-footer {
+	MARGIN-TOP: -1px
+}
+.x-row-editor-body {
+	ZOOM: 1; BACKGROUND: #ebf2fb; OVERFLOW: hidden; PADDING-TOP: 2px
+}
+.x-row-editor .x-btns {
+	POSITION: absolute; PADDING-LEFT: 5px; BACKGROUND: url(images/row-editor-btns.gif) no-repeat 0px 0px; TOP: 28px; LEFT: 20px
+}
+.x-row-editor .x-btns .x-plain-bwrap {
+	PADDING-RIGHT: 5px; BACKGROUND: url(images/row-editor-btns.gif) no-repeat right -31px
+}
+.x-row-editor .x-btns .x-plain-body {
+	BACKGROUND: url(images/row-editor-btns.gif) repeat-x 0px -62px; HEIGHT: 31px
+}
+.x-row-editor .x-btns .x-table-layout-cell {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; PADDING-TOP: 3px
+}
+.icon-user-add {
+	BACKGROUND-IMAGE: url(../shared/icons/fam/user_add.gif) !important
+}
+.icon-user-delete {
+	BACKGROUND-IMAGE: url(../shared/icons/fam/user_delete.gif) !important
+}
+.errorTip .x-tip-body UL {
+	LIST-STYLE-TYPE: disc; MARGIN-LEFT: 15px
+}

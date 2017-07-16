@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>header</title>
+<style>
+a:link {
+	text-decoration: none;
+	color: #039
+}
+
+a:active {
+	text-decoration: blink
+}
+
+a:hover {
+	text-decoration: underline;
+	color: red
+}
+
+a:visited {
+	text-decoration: none;
+	color: #FFF
+}
+
+#header {
+	background-image: url(tab-strip-bg.gif);
+	height: 32px;
+	padding-left: 10px;
+	padding-top: 8px;
+}
+
+#header_title {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.cc {
+	color: #039;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+</style>
+<script type="text/javascript" src="/api/axiom/axiom-all.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+	Zion.user.getInfo(function(data) {
+		if (data) {
+			$("#header_title").html(Zion.user.corp_name);
+		}
+	});
+
+	function show_count(count){
+		$("#count").html(count);
+	}
+	function show_forward_count(count){
+		$("#forword_count").html(count);
+	}
+	top.show_forward_count = show_forward_count;
+	top.show_count = show_count;
+	top.sos_target_count();
+});
+</script>
+</head>
+<body style="margin: 0px; padding: 0px;">
+<div id="header">
+<div id="header_title" style="float: left; margin-top: 0px;"></div>
+
+<div class="cc" style="float: right; margin-top: 10px;"><a href="#" title="退出" onclick="return top.window.location.reload();">退出</a></div>
+<div class="cc"  style="float: right; margin-top: 7px;margin-right:10px;">事件转发：<a href="#" title="紧急报警" onclick="return top.defect_forward_show();"><span class="cc" style="font-size: 14px;color: red;" id="forword_count"></span></a>&nbsp;&nbsp;紧急报警：<a href="#" title="紧急报警" onclick="return top.sos_target_show();"><span class="cc" style="font-size: 14px;color: red;" id="count"></span></a></div>
+</div>
+</body>
+</html>

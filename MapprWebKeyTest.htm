@@ -1,0 +1,32 @@
+<HTML>
+<HEAD>
+<META NAME="GENERATOR" Content="Microsoft Visual Studio 8.0">
+<TITLE></TITLE>
+<script language=javascript>
+    var WebKey;
+    try {
+        WebKey = new ActiveXObject("MapprWebKey.MWebKey");
+    } catch (e) {
+    }
+
+    if (WebKey) {
+        alert("ok");
+    } else {
+        alert("error");
+    }
+    
+    function test() {
+        alert(WebKey.Auth(""));
+    }
+
+    function test1() {
+        WebKey.UnAuth();
+    }
+</script>
+</HEAD>
+<BODY>
+ 
+<input type="button" onclick="return test();" value="test" title="test" />
+<input type="button" onclick="return test1();" value="test1" title="test1" />
+</BODY>
+</HTML>

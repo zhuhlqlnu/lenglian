@@ -1,0 +1,42 @@
+.ext-ie .x-row-editor .x-form-text {
+	MARGIN: 0px
+}
+.x-row-editor-header {
+	BACKGROUND: url(../images/row-editor-bg.gif) repeat-x 0px 0px; HEIGHT: 2px; OVERFLOW: hidden
+}
+.x-row-editor-footer {
+	BACKGROUND: url(../images/row-editor-bg.gif) repeat-x 0px -2px; HEIGHT: 2px; OVERFLOW: hidden
+}
+.ext-ie .x-row-editor-footer {
+	MARGIN-TOP: -1px
+}
+.x-row-editor-body {
+	ZOOM: 1; BACKGROUND: #ebf2fb; OVERFLOW: hidden; PADDING-TOP: 2px
+}
+.x-row-editor .x-btns {
+	POSITION: absolute; PADDING-LEFT: 5px; BACKGROUND: url(../images/row-editor-btns.gif) no-repeat 0px 0px; TOP: 28px; LEFT: 20px
+}
+.x-row-editor .x-btns .x-plain-bwrap {
+	PADDING-RIGHT: 5px; BACKGROUND: url(../images/row-editor-btns.gif) no-repeat right -31px
+}
+.x-row-editor .x-btns .x-plain-body {
+	BACKGROUND: url(../images/row-editor-btns.gif) repeat-x 0px -62px; HEIGHT: 31px
+}
+.x-row-editor .x-btns .x-table-layout-cell {
+	PADDING-BOTTOM: 3px; PADDING-LEFT: 3px; PADDING-RIGHT: 3px; PADDING-TOP: 3px
+}
+.ext-ie6 .x-row-editor .x-form-field-wrap .x-form-trigger {
+	TOP: 1px
+}
+.ext-ie7 .x-row-editor .x-form-field-wrap .x-form-trigger {
+	TOP: 1px
+}
+.ext-ie6 .x-row-editor .x-form-field-trigger-wrap {
+	MARGIN-TOP: -1px
+}
+.ext-ie7 .x-row-editor .x-form-field-trigger-wrap {
+	MARGIN-TOP: -1px
+}
+.errorTip .x-tip-body UL {
+	LIST-STYLE-TYPE: disc; MARGIN-LEFT: 15px
+}

@@ -1,0 +1,31 @@
+    .light_first {
+	    background-image: url(images/light_first.png) !important;
+	}
+	.light_play {
+	    background-image: url(images/light_play.png) !important;
+	}
+	.light_pause {
+	    background-image: url(images/light_pause.png) !important;
+	}
+	.light_stop {
+	    background-image: url(images/light_stop.png) !important;
+	}
+	.light_last {
+	    background-image: url(images/light_last.png) !important;
+	}
+	
+	.dark_first {
+	    background-image: url(images/dark_first.png) !important;
+	}
+	.dark_play {
+	    background-image: url(images/dark_play.png) !important;
+	}
+	.dark_pause {
+	    background-image: url(images/dark_pause.png) !important;
+	}
+	.dark_stop {
+	    background-image: url(images/dark_stop.png) !important;
+	}
+	.dark_last {
+	    background-image: url(images/dark_last.png) !important;
+	}

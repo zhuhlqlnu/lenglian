@@ -1,0 +1,10 @@
+* html .u2_image_sketch {
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="pdl_files/u2_image_sketch.png");
+}
+
+* html .u5_image_sketch {
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="pdl_files/u5_image_sketch.png");
+}
+

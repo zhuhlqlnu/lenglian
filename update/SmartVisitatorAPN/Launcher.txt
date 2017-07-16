@@ -1,0 +1,6 @@
+SmartVisitator.exe
+http://10.73.249.53/update/SmartVisitatorAPN
+Newtonsoft.Json.Compact.dll:1.0.0
+SmartVisitator.exe:1.0.15
+SmartVisitator.txt:1.0.1
+Launcher.exe:1.0.1

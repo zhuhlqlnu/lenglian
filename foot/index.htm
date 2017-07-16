@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>footer</title>
+<style>
+#footer {
+	color: #666;
+	height: 18px;
+	padding-top: 2px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	background-image: url(footer-bg.gif);
+}
+</style>
+<script type="text/javascript" src="/api/axiom/axiom-all.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+	Zion.user.getInfo(function(data) {
+		if (data) {
+			$("#footer").html(Zion.user.system_copyright);
+		}
+	});
+});
+</script>
+</head>
+<body style="margin:0px; padding:0px;">
+<div id='footer' align="center"></div>
+</body>
+</html>

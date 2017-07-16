@@ -1,0 +1,1 @@
+			[ lp, "_top" ], [ mp, "_self" ], [ np, "_parent" ], [ op, "_blank" ], [ qp, 200 ], [ rp, 601 ], [ sp, 602 ], [ tp, 603 ], [ up, 610 ], [ vp, 620 ], [ wp, 500 ], [ xp, 1 ], [ yp, 0 ],

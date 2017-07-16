@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>head</title>
+<style>
+.cc {
+	color: #333;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 40px;
+	font-weight: bold;
+}
+</style>
+<script type="text/javascript" src="/api/axiom/axiom-all.js"></script>
+<script type="text/javascript">
+Ext.onReady(function() {
+	Zion.user.getInfo(function(data) {
+		if (data) {
+			$("#main_title").html(Zion.user.system_name);
+			var corp_id = Zion.user.corp_id;
+			Zion.db.getJSON('corp.is_img.select',[corp_id],function(data){
+				if(data.r){
+					if(data.r[0][0] == 1){
+						$("body").css({'background-image': 'url(/uploaded/corp_poi/'+Zion.user.corp_id+'.jpg)', 'background-repeat': 'no-repeat','background-position':'center 0'});
+					}else{}	
+				}else{
+				
+				}
+			});
+			
+		}
+	});
+});
+</script>
+</head>
+<body style="margin: 0px; padding: 0px;  background-color: #E5EDF8;">
+<div align="center" style="padding-top: 200px;">
+<h6 class="cc"><strong><span id="main_title"></span></strong></h6>
+</body>
+</html>

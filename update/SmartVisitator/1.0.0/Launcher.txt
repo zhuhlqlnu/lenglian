@@ -1,0 +1,6 @@
+SmartVisitator.exe
+http://182.50.0.148/update/SmartVisitator
+Newtonsoft.Json.Compact.dll:1.0.0
+SmartVisitator.exe:1.0.9
+SmartVisitator.txt:1.0.0
+Launcher.exe:1.0.0

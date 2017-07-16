@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+</head>
+<script type="text/javascript" src="/api/axiom/axiom-all.js"></script>
+
+<body>
+<div align="center" style="margin-top:10px;"><h2>缺陷统计</h2></div>
+<div align="center"style="margin-top:15px;"></div>
+<table  align="center"  style=" font-size:13px;text-align:center;"width="1050" border="1" bordercolor="#000000" cellpadding="5"  cellspacing="0">
+  <tr>
+    <td width="8%"><b>缺陷编号</b></td>
+    <td width="8%"><b>图片</b></td>
+    <td width="15%"><b>上报时间</b></td>
+    <td width="8%"><b>发送人员</b></td>
+    <td width="8%"><b>纬度</b></td>
+    <td width="8%"><b>经度</b></td>
+    <td width="10%"><b>缺陷类型</b></td>
+    <td width="10%"><b>处理状态</b></td>
+    <td width="40%"><b>缺陷说明</b></td>
+  </tr>
+ </table>
+  <script type="text/javascript">
+	var token = Zion.util.queryString('token');
+	var is_custom = top.is_custom;
+	if(is_custom){
+		var std = top.std;
+		var end = top.end;
+		var params = [selectCorpId,selectCorpId,selectCorpId,std,end];
+	}else{
+		var new_start_time = top.new_start_time;
+		var new_end_time = top.new_end_time;
+		var	selectCorpId = top.selectCorpId;
+		var params = [selectCorpId,selectCorpId,selectCorpId,new_start_time,new_end_time];
+	}
+	Zion.db.getJSON('pipe.statistics.defect_report.select',params,function(data){
+		if(!data.f){
+			var data_value = data.r;		
+			var status_value;
+			for (var i = 0; i < data_value.length; i++ ){
+				var status = data_value[i][8];
+				if(status == 1){ 
+					status_value = "未处理";
+				}else if(status == 2){
+					status_value = "处理中";
+				}else if(status == 3){
+					status_value = "已处理";
+				}else{
+					status_value = '';
+				}
+				if(data_value[i][7] == null){
+					data_value[i][7] = "";
+				}
+				$("table").append("<tr><td >"+data_value[i][0]+"</td><td>"+data_value[i][0]+".jpg</td><td>"+data_value[i][1]+"</td><td>"+data_value[i][6]+"</td><td>"+data_value[i][4]+"</td> <td>"+data_value[i][3]+"</td><td>"+data_value[i][5]+"</td><td>"+status_value+"</td><td>"+data_value[i][7]+"</td></tr>");
+			}
+		}
+	});
+  </script>
+</body>
+</html>

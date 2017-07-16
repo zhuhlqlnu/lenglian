@@ -1,0 +1,20 @@
+* html .u2_image_sketch {
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="jxg_files/u2_image_sketch.png");
+}
+
+* html .u3_image_sketch {
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="jxg_files/u3_image_sketch.png");
+}
+
+* html .u6_image_sketch {
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="jxg_files/u6_image_sketch.png");
+}
+
+* html .u16_original {
+    background-image: none;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="jxg_files/u16_original.png");
+}
+

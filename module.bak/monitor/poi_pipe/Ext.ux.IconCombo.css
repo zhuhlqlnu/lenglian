@@ -1,0 +1,32 @@
+/* application specific styles */
+.x-flag-1 {
+    background-image:url(/api/image/poi/1.png) !important;
+}
+.x-flag-2 {
+    background-image:url(/api/image/poi/2.png) !important;
+}
+.x-flag-3 {
+    background-image:url(/api/image/poi/3.png) !important;
+}
+.x-flag-4 {
+    background-image:url(/api/image/poi/4.png) !important;
+}
+/* Ext.ux.IconCombo mandatory styles */
+.x-icon-combo-icon {
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    width: 18px;
+    height: 14px;
+}
+.x-icon-combo-input {
+    padding-left: 25px;
+}
+.x-form-field-wrap .x-icon-combo-icon {
+    top: 3px;
+    left: 5px;
+}
+.x-icon-combo-item {
+    background-repeat: no-repeat !important;
+    background-position: 3px 50% !important;
+    padding-left: 24px;
+}
